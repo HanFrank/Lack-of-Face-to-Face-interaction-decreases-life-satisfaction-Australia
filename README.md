@@ -1,6 +1,6 @@
 # Lack of Face to Face interaction due to COVID-19 is a major cause for decreasing life satisfaction in Australia
 
-author: 
+Authors: 
   - Thomas D'Onofrio
   - Tomoya Fujikawa
   - Ziyao Han
