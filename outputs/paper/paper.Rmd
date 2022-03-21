@@ -33,8 +33,6 @@ To investigate the causes of decreased life satisfaction in Australia, this pape
 
 The results of our investigation indicate a significant decrease in the life satisfaction scores among citizens in Australia after the COVID-19 pandemic along with the number of face to face contact with friends and family living outside of their household. However, surprisingly, there were no other variables that showed a significant change during the pandemic. This paper consists of different tables and graphs for each variable showing the opposite result from what we expected initially. Thus, the reduction in the frequency of face to face contact seems to be the most influential factor. To investigate further to support our conclusion, we will also produce our own supplementary survey, asking more detailed and specific questions about our investigation.
 
-The statistical analysis in this report will be done using `R` [@citeR]. The R Packages, `tidyverse` [@citeTidyverse] and `dplyr` [@citeDplyr] will be used for data manipulation and cleaning. The graphs and tables for this report will created and formatted with `ggplot2` [@citeggplot] and `kableExtra` [@citekable]. The packages `bookdown` [@citebookdown] and `knitr` [@citeKnitr] will be used to format this report.
-
 # Data
 
 ## The Survey
@@ -57,7 +55,7 @@ The issue with this non-response while surveying is that the people who do not r
 
 ## The Datasets
 
-The Australian Bureau of Statistics used the survey responses to create a large variety of different datasets each of which tell us something different. Within the datasets, data from both the current survey done in 2020 as well as surveys done in previous years is included. The values in the datasets are also mainly displayed as average answers among respondents. In this paper, we will be focusing on analyzing two of the larger, more important datasets provided. This analysis will be conducted using R [@citeR] and many of the helpful packages within it, such as Tidyverse [@citeTidyverse], Dplyr [@citeDplyr], and Knitr [@citeKnitr], where several tables and figures will be created to give us more insight on the datasets and allow for a story to be told based on the data.
+The Australian Bureau of Statistics used the survey responses to create a large variety of different datasets each of which tell us something different. Within the datasets, data from both the current survey done in 2020 as well as surveys done in previous years is included. The values in the datasets are also mainly displayed as average answers among respondents. In this paper, we will be focusing on analyzing two of the larger, more important datasets provided. This analysis will be conducted using `R` [@citeR] and many of the helpful packages within it, such as `Tidyverse` [@citeTidyverse], `Dplyr` [@citeDplyr], `Knitr` [@citeKnitr] and `ggplot2` [@citeggplot], where several tables and figures will be created to give us more insight on the datasets and allow for a story to be told based on the data. The package `bookdown` [@citebookdown] will be used to format this report.
 
 The first dataset that will be used displays the average overall life satisfaction on a scale of 1-10 of Australians, where averages are shown based on specific types of groupings. Life satisfaction is described as how each respondent feels about their current wellbeing and happiness, with 10 being 100% happy and 0 being not happy at all.
 
