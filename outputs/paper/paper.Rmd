@@ -5,7 +5,7 @@ author:
   - Thomas D'Onofrio
   - Tomoya Fujikawa
   - Ziyao Han
-thanks: "Code and data are available at: https://github.com/HanFrank/STA304-Paper-3-"
+thanks: "Code and data are available at: https://github.com/HanFrank/Lack-of-Face-to-Face-interaction-decreases-life-satisfaction-Australia"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 abstract: "The COVID-19 pandemic has affected the lives of many in ways that go beyond just physical health, as people’s mental health has also been largely impacted. Using data provided from Australia’s General Social Survey, distributions were created and analyzed to determine how the lives and social situations experienced by citizens have changed in 2020 as a result of the pandemic. It was found that overall life satisfaction had decreased substantially in the Australian population, which was mainly caused by the lack of face to face contact people had with their friends and family due to the lockdowns. There are some implications to these findings, as Australia’s social survey lacked several key variables that may have played a role in affecting life satisfaction, and could have also had some non-response bias since surveying was completed online."
 output: 
@@ -27,9 +27,11 @@ library(ggplot2)
 
 # Introduction
 
-The COVID-19 pandemic started in 2020 and people were forced to refrain from in-person contact, resulting in a major change in their lifestyle. School and jobs transferred online, and masks had to be worn at all times. This drastic change in lifestyle led to a decrease in the satisfaction level of individuals. In Australia in the very beginning, non-essential social gatherings such as party events were restricted, but most business operations including many retail categories remained available. After the vaccines became available, more than 90% of the population had completed their second dose by December 2021. Australia tried to pursue a zero-COVID suppression strategy until late 2021 by strictly controlling international arrivals and quickly responding to local outbreaks. This resulted in a relatively fast recovery of the economy compared to other developed countries [@citeForbes]. However, some people experienced a financial crisis, while some others experienced serious mental issues. The cause of the decrease in satisfaction scores varied among each other. Thus, it may be helpful to investigate what the biggest cause of the decrease in the satisfaction score was, in order to ensure that people are satisfied as the COVID-19 pandemic is still ongoing.
+The COVID-19 pandemic has had a heavy impact on the physical and mental health of many across the world. Since the beginning of the COVID-19 pandemic in 2020, people around the world have been required to refrain from in-person contact, resulting in a major lifestyle change. School and jobs transferred online, and masks had to be worn at all times. In Australia, in response to the pandemic, non-essential businesses and social gatherings were restricted. In addition, Australia pursued a zero-COVID suppression strategy until late 2021 by strictly controlling international arrivals and quickly responding to local outbreaks. The combination of a rapid response along with its geographic isolation resulted in a relatively quick COVID-19 recovery compared to other developed countries [@citeForbes]. However, there are still clear indications of a decrease in overall life satisfaction in the country since the beginning of the pandemic. Thus, in this paper, we will investigate the factors related to the decrease in life satisfaction and discuss what it all means.
 
-To investigate what the biggest cause of stress was in Australia, this paper aims to examine different variables to see if there is any correlation between the life satisfaction score and a certain variable. The data we will be using for the analysis is a response to the General Social Survey provided by the Australian Bureau of Statistics [@citeABS1]. The survey asked the citizens a variety of questions about their social experiences and mental health. We used the provided data and compared different variables to test which variable had the biggest influence on our independent variable, the overall satisfaction score. The results of our investigation indicates a significant decrease in the life satisfaction scores among citizens in Australia after the COVID-19 pandemic along with the number of face to face contact with friends and family living outside of their household. However, surprisingly, there was no other variable that showed a significant reduction during the pandemic. The paper consists of different tables and graphs for each variable showing the opposite result from what we expected initially. Thus, the reduction in the frequency of face to face contact seems to be the most influential factor. To investigate further to support our conclusion, we will also produce our own supplementary survey, asking more detailed and specific questions about our investigation.
+To investigate the causes of decreased life satisfaction in Australia, this paper aims to examine different variables to see if there is any correlation between the life satisfaction score and a certain variable. The data we will be using for the analysis is a response to the General Social Survey provided by the Australian Bureau of Statistics [@citeABS1]. The survey asked the citizens a variety of questions about their social experiences and mental health. We used the provided data and compared different variables to test which variable had the biggest influence on our independent variable, the overall satisfaction score. 
+
+The results of our investigation indicate a significant decrease in the life satisfaction scores among citizens in Australia after the COVID-19 pandemic along with the number of face to face contact with friends and family living outside of their household. However, surprisingly, there were no other variables that showed a significant change during the pandemic. This paper consists of different tables and graphs for each variable showing the opposite result from what we expected initially. Thus, the reduction in the frequency of face to face contact seems to be the most influential factor. To investigate further to support our conclusion, we will also produce our own supplementary survey, asking more detailed and specific questions about our investigation.
 
 The statistical analysis in this report will be done using `R` [@citeR]. The R Packages, `tidyverse` [@citeTidyverse] and `dplyr` [@citeDplyr] will be used for data manipulation and cleaning. The graphs and tables for this report will created and formatted with `ggplot2` [@citeggplot] and `kableExtra` [@citekable]. The packages `bookdown` [@citebookdown] and `knitr` [@citeKnitr] will be used to format this report.
 
@@ -82,18 +84,21 @@ Table \@ref(tab:dataextract1) displays an extract of the first 10 of the 16 tota
 The main groups from the full dataset that we will be using are the different age groups, 15-24, 25-39, 40-54, and 55-69 years old. We will also be focusing moreso on the population as a whole as opposed to splitting it up into genders, as on the surface there does not seem to be much difference between life satisfaction and changes in life satisfaction in males and females. With this in mind, Table \@ref(tab:satisfactiontable) below shows the mean life satisfaction for just the years and groups we are analyzing.
 
 ```{r, echo = FALSE, message = FALSE}
+# Reading in data
 satisfaction <- read_csv(here::here("inputs/data/Graph 1_ Overall life satisfaction by Age, 2014 - 2020.csv"))
 satisfaction <- data.frame(satisfaction)
 satisfaction <- subset(satisfaction, select = c(1, 2, 3, 4))
 satisfaction <- satisfaction[c(2, 3, 4, 5, 6), ]
 colnames(satisfaction) <- c('Age Group','2014', '2019', '2020')
 
+# Taking subset for graph
 g1 <-
   satisfaction %>%
   gather(Year, Score, 2:4)
 ```
 
 ```{r satisfactiontable, echo = FALSE, message = FALSE}
+# Plotting subset of table for visualization
 satisfaction %>%
   select(`Age Group`, `2014`, `2019`, `2020`) %>%
   slice(1:5) %>%
@@ -112,6 +117,7 @@ By displaying the average life satisfaction of people in 2014, 2019 and 2020 nex
 We can graph the average life satisfaction for each age in all three years in order to get a clearer look at this trend. Figure \@ref(fig:barsatisfaction) shows this visualization.
 
 ```{r barsatisfaction, echo=FALSE, fig.cap= "Bar plot showing the overall life satisfaction of Australians, by age group, in 2014, 2019, and 2020", warning=FALSE}
+# Graphing using ggplot
 g1 %>%
   ggplot(aes(x = `Age Group`, y = Score, group = Year, fill = Year)) +
   geom_col(position = "dodge", alpha = 0.8)+
@@ -172,6 +178,7 @@ contact <-
   gather(Year, Percentage, 2:4)
 ```
 ```{r barcontact, fig.cap= "Bar plot showing the proportion of Australians experiencing face to face contact in 2014, 2019, and 2020", echo=FALSE, message=FALSE}
+# Graphing using ggplot
 contact %>%
   ggplot(aes(x = Description, y = as.numeric(Percentage), group = Year, fill = Year)) +
   geom_col(position = "dodge", alpha = 0.8) +
@@ -186,6 +193,7 @@ Figure \@ref(fig:barcontact), showing the proportion of Australians that have ex
 Another aspect that you would expect to have been affected by the pandemic in 2020 is one's financial situation. Many people were laid off and left without work, evident by Australia's 7.4% unemployment rate during the peak of the pandemic, more than 3% higher than it eventually recovered to once things improved [@citeHinton]. This seemingly would have caused citizens to make less money than usual and caused more financial stress than they already had, leading to lower life satisfaction and happiness levels. Despite this logic, the survey results said otherwise.
 
 ```{r, echo = FALSE, message=FALSE}
+# Reading in data and cleaning
 finance <- read_csv(here::here("inputs/data/Table 16.1_Proportion-Table 1.csv"))
 finance <- data.frame(finance)
 finance <- subset(finance, select = c(1, 2, 3, 4, 5, 6))
@@ -198,6 +206,7 @@ finance <-
 ```
 
 ```{r barfinance, fig.cap= "Bar plot showing the proportion of Australians with Financial Stress in 2014, 2019, and 2020", echo=FALSE, message=FALSE}
+# Graphing using ggplot
 finance %>% 
   ggplot(aes(x = Description, y = as.numeric(Percentage), group = Year, fill = Year)) +
   geom_col(position = "dodge", alpha = 0.8) +
@@ -215,6 +224,7 @@ For all three of these financial social experience categories, the changes from 
 Health is an aspect of daily life probably most impacted by the COVID-19 pandemic. Due to this public health crisis, and discussed previously, the pandemic has had a clear impact on the overall life satisfaction of Australian. Thus, one may hypothesize, along with the pandemic itself and the social and physical consequences of self-isolation would impact the health and well being of the population. However, as shown in the survey results, this does not seem to be the case.
 
 ```{r, echo = FALSE, message=FALSE}
+# Reading and cleaning data
 health <- read_csv(here::here("inputs/data/Table 17.1_Proportion-Table 1.csv"))
 health <- data.frame(health)
 health <- subset(health, select = c(1, 12, 16, 20))
@@ -227,6 +237,7 @@ health <-
 ```
 
 ```{r barhealth, fig.cap= "Bar plot showing the self assessed health of Australians in 2014, 2019, and 2020", echo=FALSE, message=FALSE}
+# Graphing using ggplot
 health %>% 
   ggplot(aes(x = Description, y = as.numeric(Percentage), group = Year, fill = Year)) +
   geom_col(position = "dodge", alpha = 0.8) +
@@ -241,6 +252,7 @@ In the survey, through the years 2014, 2019, 2020 there is no noticeable change 
 The final factor we will investigate in this paper with these datasets is the stressors affecting the Australian people and their relationship with overall life satisfaction. Indubitably, high amounts of stress and anxiety will impact overall life satisfaction. Thus in an investigation into overall life satisfaction, stressors are expected to be a key contributor. Shockingly, from plotting the stressors from 2017, 2019, 2020 this does not seem to be the case. 
 
 ```{r, echo = FALSE, message=FALSE}
+# Reading in and cleaning data
 stressors <- read_csv(here::here("inputs/data/Table 17.1_Proportion-Table 1.csv"))
 stressors <- data.frame(stressors)
 stressors <- subset(stressors, select = c(1, 12, 16, 20))
@@ -252,6 +264,7 @@ stressors <-
   gather(Year, Percentage, 2:4)
 ```
 ```{r barstressors, fig.cap= "Bar plot showing the stressors experienced by Australians in 2014, 2019, and 2020" , echo=FALSE, message=FALSE}
+# Graphing using ggplot
 stressors %>% 
   ggplot(aes(x = Description, y = as.numeric(Percentage), group = Year, fill = Year)) +
   geom_col(position = "dodge", alpha = 0.8) +
